@@ -9,10 +9,10 @@ class SortedList(list):
         else:
             super().__init__()
 
+    # deprecated
     def add(self, value):
         """Add an element to the list and keep it sorted using insertion sort logic."""
         self.append(value)
-        # Perform insertion sort on the newly added element
         i = len(self) - 1
         while i > 0 and self[i] < self[i - 1]:
             self[i], self[i - 1] = self[i - 1], self[i]
@@ -46,7 +46,7 @@ class SortedList(list):
             return merge(left, right)
 
         sorted_list = merge_sort_recursive(self)
-        self[:] = sorted_list  # Update the current list with the sorted one
+        self[:] = sorted_list
         return self
 
     def binary_search(self, target):
@@ -60,7 +60,7 @@ class SortedList(list):
                 left = mid + 1
             else:
                 right = mid - 1
-        return -1  # Element not found
+        return -1 # return -1 if there is no value found
 
 
 def main():
@@ -71,6 +71,7 @@ def main():
         list_1.append(int(first.strip()))
         list_2.append(int(second.strip()))
     list_2 = SortedList(list_2)
+    list_2.add(1)
     
     distance = 0
     length = len(list_1)
