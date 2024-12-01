@@ -4,7 +4,8 @@ class SortedList(list):
     def __init__(self, *args):
         """Initialize the heap with optional initial values."""
         if args:
-            super().__init__(sorted(*args))
+            super().__init__(*args)
+            self.merge_sort()
         else:
             super().__init__()
 
@@ -16,6 +17,37 @@ class SortedList(list):
         while i > 0 and self[i] < self[i - 1]:
             self[i], self[i - 1] = self[i - 1], self[i]
             i -= 1
+
+    def merge_sort(self):
+        """Sort the list using merge sort algorithm."""
+        if len(self) <= 1:
+            return self
+
+        def merge(left, right):
+            result = []
+            i = j = 0
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    result.append(left[i])
+                    i += 1
+                else:
+                    result.append(right[j])
+                    j += 1
+            result.extend(left[i:])
+            result.extend(right[j:])
+            return result
+
+        def merge_sort_recursive(lst):
+            if len(lst) <= 1:
+                return lst
+            mid = len(lst) // 2
+            left = merge_sort_recursive(lst[:mid])
+            right = merge_sort_recursive(lst[mid:])
+            return merge(left, right)
+
+        sorted_list = merge_sort_recursive(self)
+        self[:] = sorted_list  # Update the current list with the sorted one
+        return self
 
     def binary_search(self, target):
         """Perform binary search on the sorted list."""
@@ -33,15 +65,15 @@ class SortedList(list):
 
 def main():
     list_1 = []
-    list_2 = SortedList()
+    list_2 = []
     for line in sys.stdin:
         first, second = line.split(maxsplit=1)
         list_1.append(int(first.strip()))
-        list_2.add(int(second.strip()))
+        list_2.append(int(second.strip()))
+    list_2 = SortedList(list_2)
     
     distance = 0
     length = len(list_1)
-    print(list_1, list_2)
     for _ in range(length):
         num = list_1.pop()
         idx = list_2.binary_search(num)
@@ -53,7 +85,6 @@ def main():
         min += 1
         while num == list_2[max]:
             max += 1
-        print(min, max)
         distance += num * (max - min)
 
     print(distance)
