@@ -129,6 +129,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.AoC/
 
 # Spyder project settings
 .spyderproject
