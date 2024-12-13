@@ -55,6 +55,9 @@ class Scraper:
         
         if not os.path.exists(f"day{dayOfTheMonth}"):
             os.makedirs(f"day{dayOfTheMonth}")
+
+        with open(f"day{dayOfTheMonth}/test.py", "w") as file:
+            print("import sys\n\ndef main():\n\tdata = sys.stdin.read().strip().split(\"\\n\")\n\n\nif __name__ == \"__main__\":\n\tmain()", file=file)
         
         if os.path.exists(f"day{dayOfTheMonth}/input.txt"):
             with open(f"day{dayOfTheMonth}/input.txt", "r") as file:
